@@ -1,0 +1,387 @@
+@import url('https://fonts.googleapis.com/css2?family=Kiwi+Maru:wght@400;500&display=swap');
+
+html {
+    background-color: #e6f7e6; /* 薄いミントグリーン */
+
+    /*
+      4色のドットを、40x40pxのグリッド内で
+      異なる位置に配置して、全体にリピートさせます
+    */
+
+    /* 全レイヤー共通の繰り返しサイズ */
+    background-size: 40px 40px;
+
+    /* ★ 色指定をhexからrgba()に変更し、透明度 0.5 (50%) を追加 */
+
+    /* レイヤー1: ピンクのドット */
+    background-image: radial-gradient(rgba(255, 183, 183, 0.5) 8%, transparent 8%),
+    /* レイヤー2: ブルーのドット */ radial-gradient(rgba(183, 183, 255, 0.5) 8%, transparent 8%),
+    /* レイヤー3: イエローのドット */ radial-gradient(rgba(243, 243, 161, 0.5) 8%, transparent 8%),
+    /* レイヤー4: グリーンのドット */ radial-gradient(rgba(212, 236, 212, 0.5) 8%, transparent 8%);
+
+    /* 各レイヤーのドットの位置 */
+    background-position: 0px 0px, /* ピンク: 左上 */
+    20px 20px, /* ブルー: 右下 */
+    20px 0px, /* イエロー: 右上 */
+    0px 20px; /* グリーン: 左下 */
+}
+
+/* --- 基本設定とレイアウトコンテナ（統合） --- */
+body {
+    /* --- 基本設定から継承 --- */
+    font-family: "ヒラギノ丸ゴ Pro W4", "Hiragino Maru Gothic Pro", "メイリオ", Meiryo, sans-serif;
+    line-height: 1.6;
+    color: #555;
+    margin: 0; /* ★基本設定のmargin: 0は削除し、レイアウトコンテナ側を優先 */
+    padding: 0; /* ★基本設定のpadding: 0は削除 */
+
+    /* --- 全体のレイアウトコンテナの設定 --- */
+    max-width: 850px;
+    margin: 30px auto; /* 上下左右に余白 */
+    padding: 30px 40px 25px;
+    background-color: #ffffff; /* コンテンツ領域は白 */
+    min-height: calc(100vh - 60px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+    border-radius: 25px;
+    border: 2px solid #d4ecd4;
+    position: relative;
+}
+
+
+/* --- ヘッダー (index.html) --- */
+header {
+    background-color: #a8dadc; /* 水色（空の色） */
+    color: #fff;
+    padding: 27px 30px 15px; /* フレームの上下余白 */
+    margin: 0px 10px 20px 10px; /* bodyのpaddingを相殺 */
+    border-radius: 20px; /* 角を丸く */
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border-bottom: 2px solid #8ecacb;
+}
+header h1 {
+    margin: 0;
+    color: #fff;
+    font-size: 2.5rem; /* ★文字サイズを3remから2.5remに縮小 */
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.2); /* 文字に影 */
+    letter-spacing: 2px; /* 少し字間をあける */
+    border: none;
+}
+
+/* --- 各ページのタイトル (h1) --- */
+h1 {
+    color: #52b788; /* 自然な緑色 */
+    border-bottom: 3px dashed #a8dadc; /* 破線と水色の下線 */
+    padding-bottom: 12px;
+    font-size: 2.5rem;
+    margin-top: 0;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* --- リンク --- */
+a {
+    color: #79addc; /* 少し明るい青 */
+    text-decoration: none;
+    transition: color 0.2s, text-shadow 0.2s;
+}
+a:hover {
+    color: #5190d6;
+    text-decoration: none; /* ホバーで下線なし */
+    text-shadow: 0 0 5px rgba(121, 173, 220, 0.5); /* ほんのり光る */
+}
+
+/* --- フォーム (new.html, edit.html) --- */
+form p {
+    margin-bottom: 25px;
+}
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #6a6a6a;
+    font-size: 1.1rem;
+}
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #b7e0a8; /* 優しい緑の枠線 */
+    border-radius: 12px; /* 角丸 */
+    font-size: 1.1rem;
+    font-family: inherit;
+    box-sizing: border-box;
+    background-color: #fcfcfc;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); /* 内側に柔らかい影 */
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+input[type="text"]:focus,
+textarea:focus {
+    border-color: #a8dadc; /* フォーカス時に水色 */
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05), 0 0 10px rgba(168,218,220,0.4); /* 外側にも光る影 */
+    outline: none;
+}
+textarea {
+    min-height: 180px;
+    resize: vertical;
+}
+
+form > p:last-child {
+    text-align: right;
+}
+
+/* --- ボタン --- */
+button,
+input[type="submit"] {
+    background-color: #52b788; /* 草の緑色 */
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 20px; /* 大きく丸める */
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+    display: inline-block;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* ボタンにも影 */
+}
+button:hover,
+input[type="submit"]:hover {
+    background-color: #6ad19d; /* ホバーで少し明るい緑 */
+    box-shadow: 0 7px 20px rgba(0,0,0,0.15); /* 影を大きく */
+}
+button:active,
+input[type="submit"]:active {
+    transform: translateY(2px); /* クリック時の沈み込み */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* --- ページごとのボタン調整 --- */
+
+/* 新規投稿ボタン (index.html) */
+body > p:first-of-type > a[href*="create"] { /* 最初のpタグ内のリンクを対象に */
+    display: block; /* ブロック要素にして中央寄せ */
+    width: fit-content; /* 内容の幅に合わせる */
+    margin: 0 auto 30px auto; /* 中央寄せ、下の余白 */
+    background-color: #ffb48a; /* オレンジ系 */
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+body > p:first-of-type > a[href*="create"]:hover {
+    background-color: #ffcba0;
+    box-shadow: 0 7px 20px rgba(0,0,0,0.15);
+}
+
+
+/* 編集リンク (detail.html) */
+.detail-actions p a {
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #f7e6a7; /* 薄い黄色 */
+    color: #6a6a6a;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.detail-actions p a:hover {
+    background-color: #f7efc4;
+}
+
+/* 削除ボタン (detail.html) */
+form[action*="delete"] button {
+    background-color: #ff9f80; /* やや明るい赤 */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+form[action*="delete"] button:hover {
+    background-color: #ffb6a0;
+}
+
+/* キャンセルリンク (edit.html) */
+input[type="submit"] + a {
+    display: inline-block;
+    margin-left: 20px;
+    padding: 15px 30px;
+    background-color: #a8dadd; /* 薄い水色 */
+    color: #6a6a6a;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+input[type="submit"] + a:hover {
+    background-color: #c4e9eb;
+}
+
+/* --- ブログ一覧 (index.html) --- */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+li {
+    background-color: #fff;
+    border: 2px solid #d4ecd4; /* 優しい緑の枠線 */
+    padding: 25px 30px;
+    margin-bottom: 20px;
+    border-radius: 18px; /* 角丸 */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* 柔らかい影 */
+    transition: box-shadow 0.3s, border-color 0.3s, transform 0.1s;
+}
+li:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    border-color: #a8dadc; /* ホバーで水色に */
+    transform: translateY(-3px); /* 少し浮き上がる */
+}
+/* 1. タイトル (h2) */
+li h2 {
+    font-size: 1.8rem;
+    margin-top: 0;
+    margin-bottom: 15px; /* 余白を調整 */
+    color: #52b788; /* 緑色 */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+}
+li h2 a {
+    color: #52b788; /* h2からリンク色を継承 */
+}
+
+/* 2. 本文 (p) */
+li p {
+    color: #6a6a6a;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+/* 3. 投稿者 & 4. 投稿日時 */
+.list-meta {
+    color: #999;
+    font-size: 0.85em;
+    margin-bottom: 5px; /* 項目間の余白 */
+}
+
+/* 5. 編集リンク */
+.list-edit {
+    margin-top: 15px; /* 上の項目との余白 */
+    text-align: right; /* 右寄せ */
+}
+.list-edit a {
+    font-size: 0.95em;
+    color: #79addc;
+    font-weight: bold;
+}
+
+/* ★詳細ページのボタンエリアを右寄せ */
+.detail-actions {
+    text-align: right;
+}
+
+/* --- ブログ詳細 (detail.html) --- */
+/* 投稿者・投稿日 */
+h1 + p,
+h1 + p + p {
+    font-size: 1rem;
+    color: #777;
+    margin: 8px 0;
+    font-style: italic;
+    text-align: center;
+}
+
+hr {
+    border: 0;
+    height: 3px;
+    background: linear-gradient(to right, #d4ecd4, #a8dadc, #d4ecd4); /* 優しいグラデーション */
+    margin: 35px 0;
+    border-radius: 2px;
+}
+
+/* 本文 */
+hr + p {
+    font-family: "Kiwi Maru", "ヒラギノ丸ゴ Pro W4", "Hiragino Maru Gothic Pro", "メイリオ", Meiryo, sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 40px;
+    
+    padding: 25px; 
+    border: 2px solid #a8dadc; /* 水色 */
+    border-radius: 12px; 
+    background-color: #fcfcfc; 
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); 
+    word-wrap: break-word; /* 長い単語でも折り返す */
+}
+
+/* 編集・削除ボタンエリア */
+.detail-actions p,
+.detail-actions form {
+    display: inline-block;
+    margin-right: 20px;
+    vertical-align: middle;
+}
+
+/* "一覧に戻る" リンク */
+a[href*="index"] {
+    display: block; /* ブロック要素にして中央寄せ */
+    width: fit-content;
+    margin: 40px auto 0 auto;
+    color: #79addc;
+    font-weight: bold;
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    border: 2px dashed #a8dadc; /* 破線ボーダー */
+    border-radius: 20px;
+    transition: background-color 0.2s, color 0.2s;
+}
+a[href*="index"]:hover {
+    background-color: #e6f7e6;
+    color: #5190d6;
+}
+
+/* --- フラッシュメッセージ --- */
+div[style*="color: red"],
+div[style*="color: green"] {
+    padding: 18px 25px;
+    margin-bottom: 25px;
+    border-radius: 15px;
+    font-weight: bold;
+    border: 2px solid;
+    font-size: 1.1rem;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+/* エラーメッセージ */
+div[style*="color: red"] {
+    background-color: #fff0f5; /* 淡いピンク */
+    color: #d15a7f !important;
+    border-color: #ffdce5;
+}
+/* 成功メッセージ */
+div[style*="color: green"] {
+    background-color: #f0fff0; /* 淡いミントグリーン */
+    color: #6ba86b !important;
+    border-color: #d8f5d8;
+}
+
+/* --- 記事とAIボタンの横並び設定 --- */
+.post-flex-wrapper {
+    display: flex;          /* 横並びにする */
+    justify-content: space-between; /* 両端に配置 */
+    align-items: flex-start; /* 上端を揃える */
+}
+
+.post-main-content {
+    flex: 1;                /* 余った幅をすべて使う */
+    min-width: 0;          /* レイアウト崩れ防止 */
+}
+
+.post-side-content {
+    margin-left: 10px;      /* ★ここで左に10pxの隙間を作る */
+    flex-shrink: 0;        /* ボタンがつぶれないようにする */
+}

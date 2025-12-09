@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>ブログ編集</title>
-</head>
-<body>
-  <h1>ブログを編集</h1>
+{% extends "/layout.html" %}
+
+{% block title %}{{ blog.title }}{% endblock %}
+{% block h1 %}{{ blog.title }}{% endblock %}
+
+{% block content %}
 
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -33,5 +31,4 @@
       <a href="{{ url_for('blogs.detail', blog_id=blog.id) }}">キャンセル</a>
     </p>
   </form>
-</body>
-</html>
+{% endblock %}

@@ -1,7 +1,9 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from flaskr import db
-# models.pyのBlogクラスをインポート
-from flaskr.models import Blog
+# models.pyのBlog,Commentクラスをインポート
+from flaskr.models import Blog, Comment
+# AIクライアントをインポート
+from flaskr.ai import client
 
 blog_bp = Blueprint('blogs', __name__, url_prefix='/blogs')
 
@@ -73,7 +75,6 @@ def edit(blog_id):
 
     return render_template('blogs/edit.html', blog=blog)
 
-
 # 削除機能
 # /<blog_id>/delete にPOSTリクエストが来たら削除を実行
 @blog_bp.route('/<int:blog_id>/delete', methods=['POST'])
@@ -86,3 +87,61 @@ def delete(blog_id):
     flash('投稿を削除しました。', 'success')
     # 一覧ページへリダイレクト
     return redirect(url_for('blogs.index'))
+
+# コメント追加機能
+@blog_bp.route('/<int:blog_id>/comments', methods=['POST'])
+def add_comment(blog_id):
+    # blog_idに対応するブログを取得
+    blog = Blog.query.get_or_404(blog_id)
+
+    # フォームからデータを取得
+    body = request.form.get("body")
+    user_name = request.form.get("user_name")
+
+    # 必須チェック
+    if not body or not user_name:
+        flash("コメント本文と名前は必須です。", "error")
+        return redirect(url_for('blogs.detail', blog_id=blog_id))
+
+    # コメントを作成してDBに保存
+    comment = Comment(body=body, user_name=user_name, blog=blog)
+    db.session.add(comment)
+    db.session.commit()
+
+    flash("コメントを追加しました！")
+    return redirect(url_for('blogs.detail', blog_id=blog_id))
+
+@blog_bp.route("/<int:blog_id>/ai-comment", methods=["POST"])
+def ai_comment(blog_id):
+    blog = Blog.query.get_or_404(blog_id)
+
+    # ---------- Azure OpenAI 呼び出し ----------
+    prompt = f"""
+    次のブログ内容に対して、オタク口調でコメントを書いてください。
+    ブログタイトル: {blog.title}
+    内容: {blog.body}
+    """
+
+    response = client.responses.create(
+        model="gpt-5-nano",
+        input=prompt
+    )
+
+    print(response.output_text)
+    ai_text = response.output_text
+    # --------------------------------------------
+
+    comment = Comment(
+        blog_id=blog.id,
+        user_name="AI Bot",
+        body=ai_text,
+    )
+
+    db.session.add(comment)
+    db.session.commit()
+
+    return jsonify({
+        "success": True,
+        "body": ai_text,
+        "user_name": "AI Bot"
+    })

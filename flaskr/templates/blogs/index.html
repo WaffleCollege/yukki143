@@ -1,23 +1,33 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
-</head>
-<body>
-    <header>
-      <h1>ミニブログを作ってみよう</h1>
-    </header>
+{% extends "/layout.html" %}
+
+{% block title %}ブログ一覧{% endblock %}
+{% block h1 %}ミニブログを作ってみよう{% endblock %}
+
+{% block content %}
     <p><a href="{{ url_for('blogs.create') }}">新規投稿</a></p>
   <div>
     <ul>
       {% for blog in blogs %} <!-- ループさせてそれぞれ要素を取り出す -->
         <li>
-          タイトル: <a href="{{ url_for('blogs.detail', blog_id=blog.id) }}">{{ blog.title }}</a>,
-          本文: {{ blog.body }}, 投稿者: {{ blog.user_name }}, 投稿日時: {{ blog.created_at }},
-          <a href="{{ url_for('blogs.edit', blog_id=blog.id) }}">[編集]</a>
+          <h2><a href="{{ url_for('blogs.detail', blog_id=blog.id) }}">{{ blog.title }}</a></h2>
+          
+          <p>
+            <strong>本文:</strong> 
+            {{ blog.body | truncate(80) }} </p>
+          
+          <div class="list-meta">
+            <strong>投稿者:</strong> {{ blog.user_name }}
+          </div>
+
+          <div class="list-meta">
+            <strong>投稿日時:</strong> {{ blog.created_at.strftime('%Y-%m-%d %H:%M') }}
+          </div>
+          
+          <div class="list-edit">
+            <a href="{{ url_for('blogs.edit', blog_id=blog.id) }}">[編集]</a>
+          </div>
         </li>
-    　{% endfor %}
+      {% endfor %}
     </ul>
   </div>
-</body>
-</html>
+{% endblock %}

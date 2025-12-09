@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>新規ブログ投稿</title>
-</head>
-<body>
+{% extends "/layout.html" %}
+
+{% block title %}{{ blog.title }}{% endblock %}
+{% block h1 %}{{ blog.title }}{% endblock %}
+
+{% block content %}
     <h1>新しいブログを書く</h1>
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
@@ -38,5 +37,4 @@
     </form>
 
     <p><a href="{{ url_for('blogs.index') }}">一覧に戻る</a></p>
-</body>
-</html>
+{% endblock %}

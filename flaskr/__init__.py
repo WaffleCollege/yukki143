@@ -3,6 +3,10 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 # SQLAlchemyのdeclarative_baseをインポート
 from sqlalchemy.orm import declarative_base
+# dotenvをインポート
+from dotenv import load_dotenv
+
+load_dotenv()  # .envファイルの内容を環境変数として読み込む
 
 Base = declarative_base()
 db = SQLAlchemy()  # ここでインスタンス作成
